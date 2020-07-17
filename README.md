@@ -1,39 +1,55 @@
-## How to use this repository
-### Template
-When creating a new repository make sure to select this repository as a repository template. ![](https://github.com/Apodini/Template-Repository/raw/develop/Images/RepositoryTemplate.png)
+# APIKit
 
-### GitHub Actions
-This repository contains several workflows which require you to provide a GitHub Secret. Secrets are encrypted environment variables that you create in a repository for use with GitHub Actions.
+![APIKit Logo](images/apiKitLogo_256.png)
 
-#### 1. Create a personal access token
-- Go to your token settings in GitHub (click on `Settings` in the user drop-down menu, then `Developer` settings in the sidebar, then click on `Personal access tokens`)
-- Then click the `Generate token` button.
-- Make sure to copy the access token
+![Swift 5.2](https://img.shields.io/badge/Swift-5.2-green.svg)
+[![License](http://img.shields.io/:License-MIT-blue.svg)](http://doge.mit-license.org)
 
-![](https://github.com/Apodini/Template-Repository/raw/develop/Images/AccessToken.png)
+APIKit is a Swift library to give you more flexibility when developing web APIs. In its current version APIKit
+is a POC for a framework that provides a declarative, composeable DSL which makes developing APIs against
+a communication protocol (CCP) natural interface a breeze. APIKit handles the mapping to concrete CCPs with
+no hassle.
 
-#### 2. Create a secret
-Next, you’ll need to add a new secret to your repository.
+## Example
 
-- Open the settings for your repository and click `Secrets` in the sidebar
-- Click `Add a new secret` and set the name to `ACCESS_TOKEN`
-- Paste the copied personal access token into  `Value`
-- Click `Add secret`
+Below is an example of an API that manages Vehicles and Customers beloging to a car vendor.
 
-![](https://github.com/Apodini/Template-Repository/raw/release/Images/Secret.png)
+```Swift
+struct CarVendorAPI: API {
+    var content: APILogic {
+        Version("v1") {
+            CRUD<Car>()
+            
+            Group {
+                ReadOne<Customer>()
+                Update<Customer>()
+            }.RESTGroup("customer")
+            
+            CRUD<Customer>()
+        }
+    }
+}
+```
 
-### ⬆️ Remove everything up to here ⬆️
+## Installation
 
-# Project Name
+### Swift Package Manager
 
-## Requirements
+You can install APIKit via Swift Package Manager by adding the following line to your `Package.swift`:
 
-## Installation/Setup/Integration
+```Swift
+import PackageDescription
 
-## Usage
+let package = Package(
+    [...]
+    dependencies: [
+        .Package(url: "https://github.com/Apodini/APIKit.git", majorVersion: XYZ)
+    ]
+)
+```
 
 ## Contributing
 Contributions to this projects are welcome. Please make sure to read the [contribution guidelines](https://github.com/Apodini/.github/blob/release/CONTRIBUTING.md) first.
 
 ## License
-This project is licensed under the MIT License. See [License](https://github.com/Apodini/Template-Repository/blob/release/LICENSE) for more information.
+APIKit is licensed under the MIT License. See [LICENSE](LICENSE) file for more information.
